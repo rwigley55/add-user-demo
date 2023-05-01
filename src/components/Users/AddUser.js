@@ -9,16 +9,25 @@ import classes from "./AddUser.module.css";
 const AddUser = (props) => {
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredAge, setEnteredAge] = useState("");
+  const [error, setError] = useState();
 
   const addUserHandler = (event) => {
     event.preventDefault();
     if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
+      setError({
+        title: "Invalid input",
+        message: "Please enter a valid name and age (non-empty values).",
+      });
       //A blank return statment will stop the rest of the function from execution
       return;
     }
     //Should work, but you are comparing a string to a number (useState initialized the input to a string)
     //the + converts the string back to a number
     if (+enteredAge < 1) {
+      setError({
+        title: "Invalid age",
+        message: "Please enter a valid age (> 0).",
+      });
       return;
     }
     // console.log(enteredUsername, enteredAge);
@@ -36,9 +45,14 @@ const AddUser = (props) => {
     setEnteredAge(event.target.value);
   };
 
+//   ErrorModal will only render if it's a true statment (below), this function sets ErrorModal to falsey
+  const errorHandler = () => {
+    setError(null);
+  };
+
   return (
     <div>
-      <ErrorModal title="An error occured" message="Something went wrong" />
+      {error && <ErrorModal title={error.title} message={error.message} onConfirm={errorHandler} />}
       {/* By default, our custom component doesn't know what to do with
       "className" prop. Only react built default HTML components can accept this
       by default */}
