@@ -19,7 +19,9 @@ const AddUser = (props) => {
     if(+enteredAge < 1) {
         return;
     }
-    console.log(enteredUsername, enteredAge);
+    // console.log(enteredUsername, enteredAge);
+    // Forwarding the enteredUsername and enteredAge to the App component (where the AddUser componenet is being used)
+    props.onAddUser(enteredUsername, enteredAge);
     setEnteredUsername("");
     setEnteredAge("");
   };
