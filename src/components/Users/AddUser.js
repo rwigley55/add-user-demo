@@ -11,7 +11,6 @@ const AddUser = (props) => {
   const nameInputRef = useRef();
   const ageInputRef = useRef();
 
-
   const [error, setError] = useState();
 
   const addUserHandler = (event) => {
@@ -38,18 +37,24 @@ const AddUser = (props) => {
     // console.log(enteredUsername, enteredAge);
     // Forwarding the enteredUsername and enteredAge to the App component (where the AddUser componenet is being used)
     props.onAddUser(enteredName, enteredUserAge);
-    nameInputRef.current.value='';
-    ageInputRef.current.value='';
+    nameInputRef.current.value = "";
+    ageInputRef.current.value = "";
   };
 
-//   ErrorModal will only render if it's a true statment (below), this function sets ErrorModal to falsey
+  //   ErrorModal will only render if it's a true statment (below), this function sets ErrorModal to falsey
   const errorHandler = () => {
     setError(null);
   };
 
   return (
     <Wrapper>
-      {error && <ErrorModal title={error.title} message={error.message} onConfirm={errorHandler} />}
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onConfirm={errorHandler}
+        />
+      )}
       {/* By default, our custom component doesn't know what to do with
       "className" prop. Only react built default HTML components can accept this
       by default */}
@@ -57,17 +62,9 @@ const AddUser = (props) => {
         <form onSubmit={addUserHandler}>
           {/* "htmlFor" is the HTML prop equivalent for "for" on label accessibility */}
           <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            type="text"
-            ref={nameInputRef}
-          />
+          <input id="username" type="text" ref={nameInputRef} />
           <label htmlFor="age">Age (Years)</label>
-          <input
-            id="age"
-            type="number"
-            ref={ageInputRef}
-          />
+          <input id="age" type="number" ref={ageInputRef} />
           <Button type="submit">Add User</Button>
         </form>
       </Card>
